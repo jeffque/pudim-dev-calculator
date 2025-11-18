@@ -6,7 +6,21 @@
 ![TailwindCSS](https://img.shields.io/badge/Tailwind-4.x-38bdf8?style=flat-square&logo=tailwindcss)
 ![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
 
-🍮 Calculate your Dev Pudim Score! Next.js app that analyzes GitHub profiles and ranks developers with dessert-themed titles from "Legendary Flan" to "Uncooked Mix". Built with Next.js 16, React 19, Tailwind & shadcn/ui. Inspired by github-readme-stats. Gamifies developer stats into a sweet scoring system. Check your flavor!
+🍮 Calculate your Dev Pudim Score! Next.js app that analyzes GitHub profiles and ranks developers with dessert-themed titles from "Legendary Flan" to "Underbaked". Built with Next.js 16, React 19, Tailwind & shadcn/ui. Inspired by github-readme-stats. Gamifies developer stats into a sweet scoring system. Check your flavor!
+
+## 🚀 Quick Start
+
+**Check your score:**
+```
+https://pudim.dev/calculator/YOUR_GITHUB_USERNAME
+```
+
+**Embed your badge:**
+```markdown
+[![Pudim Score](https://pudim.dev/badge/YOUR_GITHUB_USERNAME)](https://pudim.dev/calculator/YOUR_GITHUB_USERNAME)
+```
+
+Replace `YOUR_GITHUB_USERNAME` with your actual GitHub username!
 
 ## 🎯 What is this?
 
@@ -19,6 +33,54 @@ The app analyzes public GitHub data including:
 - 💻 Programming language distribution (your "pudim flavors")
 
 Based on these metrics, users receive a personalized rank, score, and dessert-themed title that celebrates their open-source contributions.
+
+## ✨ Features
+
+### 🔗 Direct Calculator Links
+Share your Pudim Score with a personalized URL:
+```
+https://pudim.dev/calculator/[username]
+```
+
+**Example:** `https://pudim.dev/calculator/luismr`
+
+This loads the calculator page with your stats automatically displayed!
+
+### 🖼️ Embeddable Badge
+Generate a beautiful badge image of your Pudim Score to embed anywhere:
+
+**Direct Image URL:**
+```
+https://pudim.dev/badge/[username]
+```
+
+**In Markdown (README files):**
+```markdown
+![Pudim Score](https://pudim.dev/badge/luismr)
+```
+
+**As a clickable link:**
+```markdown
+[![Pudim Score](https://pudim.dev/badge/luismr)](https://pudim.dev/calculator/luismr)
+```
+
+**In HTML:**
+```html
+<img src="https://pudim.dev/badge/luismr" alt="Pudim Score" />
+```
+
+The badge includes:
+- Your GitHub avatar
+- Username and member since date
+- Rank and title (e.g., "Master Pudim")
+- Stats: stars, followers, and repos
+- Top 5 programming languages (Pudim Flavors)
+
+### 📊 Rank Information Modal
+Click the info icon (ⓘ) next to your rank title to see:
+- Complete ranking system with all tiers
+- Score calculation formula
+- Threshold details for each rank
 
 ## 🧮 How is the Score Calculated?
 
@@ -294,18 +356,33 @@ pudim.dev/
 ├── public/             # Static assets
 ├── src/
 │   ├── app/           # Next.js App Router
-│   │   ├── actions.ts # Server actions (GitHub API calls)
-│   │   ├── layout.tsx # Root layout
-│   │   └── page.tsx   # Home page
-│   ├── components/    # React components
-│   │   ├── ui/        # shadcn/ui components
+│   │   ├── badge/
+│   │   │   └── [username]/
+│   │   │       └── route.tsx    # Badge image generation
+│   │   ├── calculator/
+│   │   │   └── [username]/
+│   │   │       └── page.tsx     # Direct calculator page
+│   │   ├── actions.ts           # Server actions (GitHub API calls)
+│   │   ├── layout.tsx           # Root layout
+│   │   └── page.tsx             # Home page
+│   ├── components/              # React components
+│   │   ├── ui/                  # shadcn/ui components
+│   │   │   ├── avatar.tsx
+│   │   │   ├── badge.tsx
+│   │   │   ├── button.tsx
+│   │   │   ├── card.tsx
+│   │   │   ├── dialog.tsx       # Rank info modal
+│   │   │   ├── input.tsx
+│   │   │   ├── navigation-menu.tsx
+│   │   │   ├── separator.tsx
+│   │   │   └── sheet.tsx
 │   │   ├── Footer.tsx
 │   │   ├── Navbar.tsx
-│   │   └── PudimScore.tsx
-│   └── lib/           # Utilities
+│   │   └── PudimScore.tsx       # Main calculator component
+│   └── lib/                     # Utilities
 │       └── utils.ts
-├── package.json       # Dependencies
-└── tsconfig.json      # TypeScript config
+├── package.json                 # Dependencies
+└── tsconfig.json                # TypeScript config
 ```
 
 ## 📄 License
@@ -321,8 +398,10 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 🔗 Links
 
-- **Live Demo**: [pudim.dev](https://pudim.dev) _(if deployed)_
+- **Live Demo**: [pudim.dev](https://pudim.dev)
 - **GitHub**: [luismr/pudim-dev-calculator](https://github.com/luismr/pudim-dev-calculator)
+- **Example Calculator**: [pudim.dev/calculator/luismr](https://pudim.dev/calculator/luismr)
+- **Example Badge**: [pudim.dev/badge/luismr](https://pudim.dev/badge/luismr)
 
 ---
 
