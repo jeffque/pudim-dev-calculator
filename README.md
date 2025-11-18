@@ -1,5 +1,7 @@
 # pudim.dev 🍮
 
+![CI](https://github.com/luismr/pudim-dev-calculator/workflows/CI%20-%20Build,%20Test%20%26%20Coverage/badge.svg)
+![Docker](https://github.com/luismr/pudim-dev-calculator/workflows/Docker%20Build%20%26%20Push/badge.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-16.0.3-black?style=flat-square&logo=next.js)
 ![React](https://img.shields.io/badge/React-19.2.0-blue?style=flat-square&logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)
@@ -191,9 +193,94 @@ Start the production server:
 npm start
 ```
 
+## 🔄 CI/CD with GitHub Actions
+
+This project uses GitHub Actions for continuous integration and deployment.
+
+### Automated Workflows
+
+**1. CI - Build, Test & Coverage** (`.github/workflows/ci.yml`)
+
+Runs on every push and pull request to `main` and `develop` branches:
+- ✅ Installs dependencies
+- ✅ Runs ESLint
+- ✅ Executes all tests (50 tests)
+- ✅ Generates coverage reports
+- ✅ Posts coverage comment on PRs
+- ✅ Uploads coverage to Codecov
+- ✅ Builds Next.js application
+- ✅ Uploads build artifacts
+
+**2. Docker Build & Push** (`.github/workflows/docker.yml`)
+
+Builds multi-architecture Docker images:
+- 🐳 Supports **ARM64** and **AMD64** architectures
+- 📦 Pushes to GitHub Container Registry (ghcr.io)
+- 🏷️ Auto-generates semantic tags
+- 🔐 Includes build attestation
+- ⚡ Uses layer caching for faster builds
+
+**Triggers:**
+- Push to `main` branch
+- Version tags (`v*.*.*`)
+- Pull requests (build only, no push)
+- Manual workflow dispatch
+
+**3. Release** (`.github/workflows/release.yml`)
+
+Automated releases on version tags:
+- 📝 Generates changelog from commits
+- 🎉 Creates GitHub release
+- 🐳 Docker images tagged with version
+
+### Using the Docker Images
+
+**Pull the latest image:**
+```bash
+docker pull ghcr.io/luismr/pudim-dev-calculator:latest
+```
+
+**Pull specific version:**
+```bash
+docker pull ghcr.io/luismr/pudim-dev-calculator:v1.0.0
+```
+
+**Pull for specific architecture:**
+```bash
+# ARM64 (Apple Silicon, ARM servers)
+docker pull --platform linux/arm64 ghcr.io/luismr/pudim-dev-calculator:latest
+
+# AMD64 (Intel/AMD processors)
+docker pull --platform linux/amd64 ghcr.io/luismr/pudim-dev-calculator:latest
+```
+
+### Setting Up GitHub Actions
+
+**Required Secrets:**
+- `GITHUB_TOKEN` - Automatically provided by GitHub
+- `CODECOV_TOKEN` - (Optional) For Codecov integration
+
+**Enable GitHub Container Registry:**
+1. Go to Settings → Actions → General
+2. Under "Workflow permissions", select "Read and write permissions"
+3. Save changes
+
+### Creating a Release
+
+```bash
+# Tag a new version
+git tag -a v1.0.0 -m "Release version 1.0.0"
+git push origin v1.0.0
+```
+
+This will trigger:
+- Automated release creation
+- Multi-arch Docker image build and push
+- Image tagged as `v1.0.0`, `v1.0`, `v1`, and `latest`
+
 ## 🐳 Docker Deployment
 
-The application is fully containerized and ready for Docker deployment.
+The application is fully containerized and ready for Docker deployment with **multi-architecture support** (ARM64 & AMD64).
 
 ### Prerequisites
 
@@ -295,30 +382,49 @@ docker run -d \
 ### Docker Image Details
 
 - **Base Image**: `node:20-alpine` (lightweight Alpine Linux)
-- **Image Size**: ~150MB (optimized with multi-stage build)
+- **Image Size**: ~407MB (optimized with multi-stage build)
+- **Architectures**: linux/amd64, linux/arm64
 - **Security**: Runs as non-root user (nextjs:nodejs)
 - **Health Check**: Built-in health endpoint monitoring
 - **Standalone Mode**: Next.js standalone output for minimal dependencies
+- **Registry**: GitHub Container Registry (ghcr.io)
+
+### Multi-Architecture Build
+
+The Dockerfile supports building for multiple architectures:
+
+**Using Docker Buildx (local build):**
+```bash
+# Setup buildx (one time)
+docker buildx create --name multiarch --use
+docker buildx inspect --bootstrap
+
+# Build for both architectures
+docker buildx build \
+  --platform linux/amd64,linux/arm64 \
+  -t pudim-dev:latest \
+  --load \
+  .
+```
+
+**GitHub Actions handles this automatically!** 🚀
 
 ### Production Deployment
 
 For production deployments, consider:
 
-1. **Using a container registry**:
-```bash
-# Tag for your registry
-docker tag pudim-dev:latest your-registry.com/pudim-dev:v1.0.0
-
-# Push to registry
-docker push your-registry.com/pudim-dev:v1.0.0
-```
+1. **Using GitHub Container Registry** (automated via CI/CD):
+   - Multi-arch images automatically built and pushed
+   - Semantic versioning with tags
+   - No manual intervention needed
 
 2. **Using orchestration platforms**:
    - Docker Swarm
-   - Kubernetes
+   - Kubernetes (see Kubernetes section)
    - AWS ECS
    - Google Cloud Run
    - Azure Container Instances
+   - Railway, Render, Fly.io
 
 3. **Adding reverse proxy** (nginx, Traefik, Caddy) for:
    - SSL/TLS termination
