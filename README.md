@@ -327,12 +327,62 @@ docker push your-registry.com/pudim-dev:v1.0.0
 
 ## 🧪 Testing
 
-Currently, this project doesn't have tests configured. Contributions for test setup are welcome!
+This project uses [Vitest](https://vitest.dev/) and [React Testing Library](https://testing-library.com/react) for comprehensive unit testing.
 
-To add testing, consider:
-- [Vitest](https://vitest.dev/) for unit tests
-- [Playwright](https://playwright.dev/) or [Cypress](https://www.cypress.io/) for E2E tests
-- [React Testing Library](https://testing-library.com/react) for component tests
+### Running Tests
+
+```bash
+# Run tests in watch mode
+npm test
+
+# Run tests once
+npm run test:run
+
+# Run tests with coverage report
+npm run test:coverage
+
+# Run tests with UI (interactive)
+npm run test:ui
+```
+
+### Test Coverage
+
+The test suite covers:
+- ✅ **Components**: Navbar, Footer, PudimScore (with full user interactions)
+- ✅ **Pages**: Home page, Calculator page
+- ✅ **API Routes**: Health check endpoint
+- ✅ **Actions**: GitHub stats fetching with various scenarios
+- ✅ **Utilities**: Class name merging utility
+
+### Writing Tests
+
+Tests are located next to the code they test in `__tests__` directories:
+
+```
+src/
+├── components/
+│   ├── __tests__/
+│   │   ├── Navbar.test.tsx
+│   │   ├── Footer.test.tsx
+│   │   └── PudimScore.test.tsx
+│   └── ...
+├── app/
+│   ├── __tests__/
+│   │   ├── page.test.tsx
+│   │   └── actions.test.ts
+│   └── ...
+└── lib/
+    ├── __tests__/
+    │   └── utils.test.ts
+    └── ...
+```
+
+### Test Configuration
+
+- **Framework**: Vitest with jsdom environment
+- **React Testing**: @testing-library/react
+- **Assertions**: @testing-library/jest-dom matchers
+- **Configuration**: `vitest.config.ts`
 
 ## 🤝 Contributing
 
