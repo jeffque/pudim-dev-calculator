@@ -191,6 +191,140 @@ Start the production server:
 npm start
 ```
 
+## 🐳 Docker Deployment
+
+The application is fully containerized and ready for Docker deployment.
+
+### Prerequisites
+
+- Docker installed on your system ([Get Docker](https://docs.docker.com/get-docker/))
+- Docker Compose (optional, included with Docker Desktop)
+
+### Building the Docker Image
+
+Build the production-ready Docker image:
+
+```bash
+docker build -t pudim-dev:latest .
+```
+
+The Dockerfile uses a multi-stage build process to:
+- Install dependencies in an isolated stage
+- Build the Next.js application
+- Create a minimal production image (~150MB)
+- Run as non-root user for security
+- Include health checks for monitoring
+
+### Running with Docker
+
+**Option 1: Using Docker directly**
+
+```bash
+docker run -d \
+  --name pudim-dev \
+  -p 3000:3000 \
+  --restart unless-stopped \
+  pudim-dev:latest
+```
+
+**Option 2: Using Docker Compose (Recommended)**
+
+```bash
+# Start the application
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop the application
+docker-compose down
+```
+
+### Accessing the Application
+
+Once running, access the application at:
+- **Local**: [http://localhost:3000](http://localhost:3000)
+- **Health Check**: [http://localhost:3000/api/health](http://localhost:3000/api/health)
+
+### Docker Commands Reference
+
+```bash
+# Build the image
+docker build -t pudim-dev:latest .
+
+# Run the container
+docker run -d -p 3000:3000 --name pudim-dev pudim-dev:latest
+
+# View logs
+docker logs -f pudim-dev
+
+# Stop the container
+docker stop pudim-dev
+
+# Remove the container
+docker rm pudim-dev
+
+# Check health status
+docker inspect --format='{{json .State.Health}}' pudim-dev
+
+# Access container shell (for debugging)
+docker exec -it pudim-dev sh
+```
+
+### Environment Variables
+
+The Docker image supports the following environment variables:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `NODE_ENV` | `production` | Node environment |
+| `PORT` | `3000` | Application port |
+| `HOSTNAME` | `0.0.0.0` | Bind address |
+| `NEXT_TELEMETRY_DISABLED` | `1` | Disable Next.js telemetry |
+
+Example with custom environment variables:
+
+```bash
+docker run -d \
+  --name pudim-dev \
+  -p 8080:3000 \
+  -e PORT=3000 \
+  pudim-dev:latest
+```
+
+### Docker Image Details
+
+- **Base Image**: `node:20-alpine` (lightweight Alpine Linux)
+- **Image Size**: ~150MB (optimized with multi-stage build)
+- **Security**: Runs as non-root user (nextjs:nodejs)
+- **Health Check**: Built-in health endpoint monitoring
+- **Standalone Mode**: Next.js standalone output for minimal dependencies
+
+### Production Deployment
+
+For production deployments, consider:
+
+1. **Using a container registry**:
+```bash
+# Tag for your registry
+docker tag pudim-dev:latest your-registry.com/pudim-dev:v1.0.0
+
+# Push to registry
+docker push your-registry.com/pudim-dev:v1.0.0
+```
+
+2. **Using orchestration platforms**:
+   - Docker Swarm
+   - Kubernetes
+   - AWS ECS
+   - Google Cloud Run
+   - Azure Container Instances
+
+3. **Adding reverse proxy** (nginx, Traefik, Caddy) for:
+   - SSL/TLS termination
+   - Load balancing
+   - Additional security headers
+
 ## 🧪 Testing
 
 Currently, this project doesn't have tests configured. Contributions for test setup are welcome!
@@ -199,85 +333,6 @@ To add testing, consider:
 - [Vitest](https://vitest.dev/) for unit tests
 - [Playwright](https://playwright.dev/) or [Cypress](https://www.cypress.io/) for E2E tests
 - [React Testing Library](https://testing-library.com/react) for component tests
-
-## 🐳 Docker
-
-### Building the Docker Image
-
-Create a `Dockerfile` in the project root:
-
-```dockerfile
-FROM node:20-alpine AS base
-
-# Install dependencies only when needed
-FROM base AS deps
-RUN apk add --no-cache libc6-compat
-WORKDIR /app
-
-COPY package.json package-lock.json ./
-RUN npm ci
-
-# Rebuild the source code only when needed
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
-
-RUN npm run build
-
-# Production image, copy all the files and run next
-FROM base AS runner
-WORKDIR /app
-
-ENV NODE_ENV=production
-
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
-COPY --from=builder /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-USER nextjs
-
-EXPOSE 3000
-
-ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
-
-CMD ["node", "server.js"]
-```
-
-Then build and run:
-
-```bash
-# Build the image
-docker build -t pudim-dev .
-
-# Run the container
-docker run -p 3000:3000 pudim-dev
-```
-
-### Docker Compose
-
-Create `docker-compose.yml`:
-
-```yaml
-version: '3.8'
-services:
-  web:
-    build: .
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=production
-```
-
-Run with:
-
-```bash
-docker-compose up
-```
 
 ## 🤝 Contributing
 
@@ -353,9 +408,12 @@ We follow [Conventional Commits](https://www.conventionalcommits.org/):
 
 ```
 pudim.dev/
-├── public/             # Static assets
+├── public/                      # Static assets
 ├── src/
-│   ├── app/           # Next.js App Router
+│   ├── app/                     # Next.js App Router
+│   │   ├── api/
+│   │   │   └── health/
+│   │   │       └── route.ts     # Health check endpoint
 │   │   ├── badge/
 │   │   │   └── [username]/
 │   │   │       └── route.tsx    # Badge image generation
@@ -381,6 +439,10 @@ pudim.dev/
 │   │   └── PudimScore.tsx       # Main calculator component
 │   └── lib/                     # Utilities
 │       └── utils.ts
+├── .dockerignore                # Docker ignore patterns
+├── Dockerfile                   # Docker production build
+├── docker-compose.yml           # Docker Compose configuration
+├── next.config.ts               # Next.js configuration
 ├── package.json                 # Dependencies
 └── tsconfig.json                # TypeScript config
 ```
