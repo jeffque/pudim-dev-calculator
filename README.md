@@ -301,7 +301,6 @@ pudim.dev/
 │   │   ├── ui/        # shadcn/ui components
 │   │   ├── Footer.tsx
 │   │   ├── Navbar.tsx
-│   │   ├── NewsletterForm.tsx
 │   │   └── PudimScore.tsx
 │   └── lib/           # Utilities
 │       └── utils.ts
