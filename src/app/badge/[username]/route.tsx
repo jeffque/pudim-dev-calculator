@@ -82,7 +82,7 @@ export async function GET(
               padding: '40px',
             }}
           >
-            <div style={{ fontSize: 32, color: '#78350f' }}>
+            <div style={{ display: 'flex', fontSize: 32, color: '#78350f' }}>
               User not found: {decodedUsername}
             </div>
           </div>
@@ -113,6 +113,7 @@ export async function GET(
           {/* Background emoji */}
           <div
             style={{
+              display: 'flex',
               position: 'absolute',
               top: '-60px',
               right: '-30px',
@@ -149,20 +150,21 @@ export async function GET(
                   height="140"
                   style={{ borderRadius: '100%', border: '4px solid #d97706' }}
                 />
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ fontSize: 48, fontWeight: 'bold', color: '#1f2937' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <div style={{ display: 'flex', fontSize: 48, fontWeight: 'bold', color: '#1f2937' }}>
                     {stats.username}
                   </div>
-                  <div style={{ fontSize: 24, color: '#6b7280' }}>
+                  <div style={{ display: 'flex', fontSize: 24, color: '#6b7280' }}>
                     Member since {new Date(stats.created_at).getFullYear()}
                   </div>
                 </div>
               </div>
 
               {/* Rank badge */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
                 <div
                   style={{
+                    display: 'flex',
                     fontSize: 72,
                     fontWeight: 900,
                     color: rank.color,
@@ -173,10 +175,10 @@ export async function GET(
                 </div>
                 <div
                   style={{
+                    display: 'flex',
                     fontSize: 28,
                     fontWeight: 'bold',
                     color: rank.color,
-                    marginTop: '8px',
                   }}
                 >
                   {rank.title}
@@ -193,27 +195,27 @@ export async function GET(
                 marginBottom: '40px',
               }}
             >
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <div style={{ fontSize: 48, fontWeight: 'bold', color: '#1f2937' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                <div style={{ display: 'flex', fontSize: 48, fontWeight: 'bold', color: '#1f2937' }}>
                   {stats.total_stars}
                 </div>
-                <div style={{ fontSize: 20, color: '#6b7280', textTransform: 'uppercase' }}>
+                <div style={{ display: 'flex', fontSize: 20, color: '#6b7280', textTransform: 'uppercase' }}>
                   STARS
                 </div>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <div style={{ fontSize: 48, fontWeight: 'bold', color: '#1f2937' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                <div style={{ display: 'flex', fontSize: 48, fontWeight: 'bold', color: '#1f2937' }}>
                   {stats.followers}
                 </div>
-                <div style={{ fontSize: 20, color: '#6b7280', textTransform: 'uppercase' }}>
+                <div style={{ display: 'flex', fontSize: 20, color: '#6b7280', textTransform: 'uppercase' }}>
                   FOLLOWERS
                 </div>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <div style={{ fontSize: 48, fontWeight: 'bold', color: '#1f2937' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                <div style={{ display: 'flex', fontSize: 48, fontWeight: 'bold', color: '#1f2937' }}>
                   {stats.public_repos}
                 </div>
-                <div style={{ fontSize: 20, color: '#6b7280', textTransform: 'uppercase' }}>
+                <div style={{ display: 'flex', fontSize: 20, color: '#6b7280', textTransform: 'uppercase' }}>
                   REPOS
                 </div>
               </div>
@@ -224,11 +226,12 @@ export async function GET(
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <div
                   style={{
+                    display: 'flex',
                     fontSize: 18,
                     color: '#6b7280',
                     textTransform: 'uppercase',
                     letterSpacing: '0.05em',
-                    textAlign: 'center',
+                    justifyContent: 'center',
                   }}
                 >
                   PUDIM FLAVORS
@@ -304,7 +307,7 @@ export async function GET(
             borderRadius: '24px',
           }}
         >
-          <div style={{ fontSize: 32, color: '#78350f' }}>
+          <div style={{ display: 'flex', fontSize: 32, color: '#78350f' }}>
             Error generating badge
           </div>
         </div>
