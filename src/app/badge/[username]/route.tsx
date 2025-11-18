@@ -34,9 +34,13 @@ type PudimRank = {
 }
 
 type GitHubStats = {
+  username: string
+  avatar_url: string
   followers: number
   total_stars: number
   public_repos: number
+  created_at: string
+  languages?: Array<{ name: string; percentage: number }>
 }
 
 function calculatePudimScore(stats: GitHubStats): { score: number; rank: PudimRank } {
@@ -72,7 +76,7 @@ export async function GET(
     // Fetch GitHub stats
     const stats = await getGithubStats(decodedUsername)
     
-    if (stats.error) {
+    if ('error' in stats) {
       // Return error badge
       return new ImageResponse(
         (
@@ -111,7 +115,8 @@ export async function GET(
       )
     }
 
-    const { rank } = calculatePudimScore(stats)
+    // TypeScript now knows stats is GitHubStats
+    const { rank } = calculatePudimScore(stats as GitHubStats)
     const topLanguages = stats.languages?.slice(0, 5) || []
 
     return new ImageResponse(
