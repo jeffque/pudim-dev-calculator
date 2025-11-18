@@ -15,7 +15,7 @@ export function Footer() {
             </a>
             . The source code is available on{" "}
             <a
-              href="#"
+              href="https://github.com/luismr/pudim-dev-calculator"
               target="_blank"
               rel="noreferrer"
               className="font-medium underline underline-offset-4"
