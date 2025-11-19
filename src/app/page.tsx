@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Code, Zap, Calculator, Link2, Image, Trophy, Star, Users, GitFork } from "lucide-react"
+import { Code, Zap, Calculator, Link2, Image as ImageIcon, Trophy, Star, Users, GitFork } from "lucide-react"
 import Link from "next/link"
 import { PudimScore } from "@/components/PudimScore"
 
@@ -92,7 +92,7 @@ export default function Home() {
             </Card>
             <Card className="h-full">
               <CardHeader>
-                <Image className="h-10 w-10 mb-2 text-primary" />
+                <ImageIcon className="h-10 w-10 mb-2 text-primary" />
                 <CardTitle>Embeddable Badge</CardTitle>
                 <CardDescription>
                   Generate a beautiful badge image to embed anywhere
