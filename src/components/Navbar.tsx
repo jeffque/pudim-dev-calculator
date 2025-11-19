@@ -15,11 +15,17 @@ export function Navbar() {
         </div>
         <div className="flex flex-1 items-center justify-end space-x-2">
           <nav className="flex items-center gap-4">
-            <Link href="#features" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
+            <Link href="/#features" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
+              Features
+            </Link>
+            <Link href="/#algorithm" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
+              Algorithm
+            </Link>
+            <Link href="/#philosophy" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
               Philosophy
             </Link>
             <Button asChild size="sm">
-              <Link href="#calculator">
+              <Link href="/#calculator">
                 Calculator
               </Link>
             </Button>

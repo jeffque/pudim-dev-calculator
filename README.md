@@ -39,71 +39,161 @@ Based on these metrics, users receive a personalized rank, score, and dessert-th
 ## ✨ Features
 
 ### 🔗 Direct Calculator Links
-Share your Pudim Score with a personalized URL:
+Share your Pudim Score with a personalized URL that instantly displays your GitHub stats:
+
 ```
 https://pudim.dev/calculator/[username]
 ```
 
-**Example:** `https://pudim.dev/calculator/luismr`
+**Example:** [https://pudim.dev/calculator/luismr](https://pudim.dev/calculator/luismr)
 
-This loads the calculator page with your stats automatically displayed!
+Simply replace `[username]` with any GitHub username. The calculator page loads automatically with all the user's stats, rank, and "pudim flavors" (programming languages) beautifully displayed!
+
+**Use Cases:**
+- Share your developer profile on social media
+- Include in your portfolio or website
+- Show off your open-source contributions
+- Compare scores with friends and colleagues
+
+---
 
 ### 🖼️ Embeddable Badge
-Generate a beautiful badge image of your Pudim Score to embed anywhere:
+Generate a beautiful, dynamic badge image of your Pudim Score to embed in your GitHub profile, documentation, or anywhere else!
 
 **Direct Image URL:**
 ```
 https://pudim.dev/badge/[username]
 ```
 
-**In Markdown (README files):**
+**In Markdown (Perfect for README files):**
 ```markdown
 ![Pudim Score](https://pudim.dev/badge/luismr)
 ```
 
-**As a clickable link:**
+**As a Clickable Badge (Recommended):**
 ```markdown
 [![Pudim Score](https://pudim.dev/badge/luismr)](https://pudim.dev/calculator/luismr)
 ```
 
 **In HTML:**
 ```html
-<img src="https://pudim.dev/badge/luismr" alt="Pudim Score" />
+<a href="https://pudim.dev/calculator/luismr">
+  <img src="https://pudim.dev/badge/luismr" alt="Pudim Score" />
+</a>
 ```
 
-The badge includes:
-- Your GitHub avatar
-- Username and member since date
-- Rank and title (e.g., "Master Pudim")
-- Stats: stars, followers, and repos
-- Top 5 programming languages (Pudim Flavors)
+**Badge Features:**
+- 🖼️ **Your GitHub avatar** - Personal branding
+- 👤 **Username and member since date** - Show how long you've been coding
+- 🏆 **Rank and title** - Your prestigious dessert designation (e.g., "Master Pudim")
+- 📊 **Key Stats** - Total stars, followers, and public repos at a glance
+- 🎨 **Top 5 Programming Languages** - Your "Pudim Flavors" with color-coded bars
+- 🔄 **Real-time Updates** - Badge refreshes automatically when your stats change
+- 📱 **Responsive Design** - Looks great on any device or platform
 
-### 📊 Rank Information Modal
-Click the info icon (ⓘ) next to your rank title to see:
-- Complete ranking system with all tiers
-- Score calculation formula
-- Threshold details for each rank
+**Pro Tips:**
+- Add the clickable version to your GitHub profile README for maximum engagement
+- Use it in project documentation to showcase maintainer credibility
+- Include in your resume or portfolio as a visual stats summary
+- Badge dimensions: 800x600px (optimized for most platforms)
+
+---
+
+### 📊 Interactive Rank Information
+Click the info icon (ⓘ) next to your rank title to open an interactive modal showing:
+
+- 📋 **Complete Ranking System** - All 6 tiers from "Legendary Flan" to "Underbaked"
+- 🧮 **Score Calculation Formula** - Transparent algorithm breakdown
+- 🎯 **Threshold Details** - See exactly what score you need for the next rank
+- 💡 **Rank Descriptions** - Fun, dessert-themed explanations for each tier
+- 📈 **Your Progress** - See how close you are to leveling up
+
+This feature helps you understand how to improve your score and reach the next delicious rank!
 
 ## 🧮 How is the Score Calculated?
 
-The Pudim Score uses a weighted algorithm inspired by [github-readme-stats](https://github.com/anuraghazra/github-readme-stats):
+The Pudim Score uses a **weighted algorithm** inspired by [github-readme-stats](https://github.com/anuraghazra/github-readme-stats) that evaluates your GitHub profile across multiple dimensions:
+
+### The Formula
 
 ```typescript
 score = (followers × 0.5) + (total_stars × 2) + (public_repos × 1)
 ```
 
-### Rank Thresholds
+### Understanding the Weights
 
-| Score | Rank | Title | Description |
-|-------|------|-------|-------------|
-| 1000+ | S+ | Legendary Flan 🍮✨ | The texture is perfect, the caramel is divine. You are a coding god! |
-| 500-999 | S | Master Pudim 🍮 | A delicious result. Michelin star worthy. |
-| 200-499 | A | Tasty Pudding 😋 | Everyone wants a slice. Great job! |
-| 100-199 | B | Sweet Treat 🍬 | Solid and dependable. A good dessert. |
-| 50-99 | C | Homemade 🏠 | Made with love, but room for improvement. |
-| 0-49 | D | Underbaked 🥚 | Needs a bit more time in the oven. |
+Each metric has a carefully chosen weight that reflects its importance in the open-source community:
 
-The score weighs stars most heavily (×2) as they indicate valuable contributions, followed by repository count (×1) for productivity, and followers (×0.5) for community recognition.
+#### ⭐ **Total Stars (×2)** - Highest Weight
+- **Why it matters**: Stars indicate that your projects are valuable, useful, and appreciated by the community
+- **Impact**: Each star contributes 2 points to your score
+- **Example**: 100 stars = 200 points
+- **Focus on**: Creating quality projects that solve real problems
+
+#### 📦 **Public Repositories (×1)** - Medium Weight
+- **Why it matters**: Shows productivity, consistency, and willingness to share your work
+- **Impact**: Each public repo contributes 1 point to your score
+- **Example**: 50 repos = 50 points
+- **Focus on**: Maintaining active projects and experimenting with new technologies
+
+#### 👥 **Followers (×0.5)** - Lower Weight
+- **Why it matters**: Represents community recognition and influence
+- **Impact**: Each follower contributes 0.5 points to your score
+- **Example**: 200 followers = 100 points
+- **Focus on**: Building relationships and sharing knowledge
+
+### Example Calculation
+
+Let's calculate the score for a developer with:
+- 👥 150 followers
+- ⭐ 250 total stars across all repositories
+- 📦 40 public repositories
+
+```
+score = (150 × 0.5) + (250 × 2) + (40 × 1)
+score = 75 + 500 + 40
+score = 615
+Rank = S (Master Pudim 🍮)
+```
+
+---
+
+### 🏆 Rank Thresholds
+
+Your calculated score determines your rank and delicious title:
+
+| Score | Rank | Title | Description | What it means |
+|-------|------|-------|-------------|---------------|
+| **1000+** | **S+** | **Legendary Flan 🍮✨** | The texture is perfect, the caramel is divine. You are a coding god! | Elite open-source contributor with massive impact |
+| **500-999** | **S** | **Master Pudim 🍮** | A delicious result. Michelin star worthy. | Highly accomplished developer with strong community presence |
+| **200-499** | **A** | **Tasty Pudding 😋** | Everyone wants a slice. Great job! | Established developer with solid contributions |
+| **100-199** | **B** | **Sweet Treat 🍬** | Solid and dependable. A good dessert. | Active contributor building their portfolio |
+| **50-99** | **C** | **Homemade 🏠** | Made with love, but room for improvement. | Emerging developer on the journey |
+| **0-49** | **D** | **Underbaked 🥚** | Needs a bit more time in the oven. | Just getting started - keep cooking! |
+
+### 💡 Tips to Improve Your Score
+
+Want to level up your Pudim Score? Focus on:
+
+1. **Quality over Quantity** (Stars)
+   - Build projects that solve real problems
+   - Write good documentation and READMEs
+   - Engage with users and address issues
+   - Promote your projects appropriately
+
+2. **Consistent Activity** (Public Repos)
+   - Share your learning journey publicly
+   - Contribute to open-source projects
+   - Create small utility libraries
+   - Maintain your existing projects
+
+3. **Community Engagement** (Followers)
+   - Help others in discussions and issues
+   - Share knowledge through blog posts or tutorials
+   - Contribute to popular projects
+   - Be active and helpful in the community
+
+Remember: **The Pudim Score is just for fun!** 🍮 The real value is in the learning, building, and sharing that happens along the way.
 
 ## 💡 Inspiration
 
